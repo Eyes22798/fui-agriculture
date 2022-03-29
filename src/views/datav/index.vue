@@ -6,7 +6,9 @@
       <div class="content">
         <div class="centerBox">
           <div class="baseBox centerMainBox1" style="height: 70%">
-            <div class="baseBoxLeft left">12312312</div>
+            <div class="baseBoxLeft left">
+              <LeftChart1 />
+            </div>
 
             <div class="baseBoxRight right">
               <div class="maps">
@@ -294,12 +296,17 @@
 </template>
 
 <script>
+import LeftChart1 from '@/components/left-chart-1.vue'
+
 export default {
   name: 'DataView',
   components: {
+    LeftChart1
   },
   data () {
-    return {}
+    return {
+      option: null
+    }
   }
 }
 </script>
