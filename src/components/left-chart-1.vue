@@ -4,10 +4,13 @@
     <div class="lc1-details">设备运行总数<span>430</span></div>
     <dv-capsule-chart class="lc1-chart" :config="config" />
     <dv-decoration-2 style="height:10px;" />
+
+    <button @click="getData">click me</button>
   </div>
 </template>
 
 <script>
+import { testApi } from '@/api'
 export default {
   name: 'LeftChart1',
   data () {
@@ -38,6 +41,13 @@ export default {
         colors: ['#00baff', '#3de7c9', '#fff', '#ffc530', '#469f4b'],
         unit: '件'
       }
+    }
+  },
+  methods: {
+    async getData () {
+      const data = await testApi()
+
+      console.log(data)
     }
   }
 }
