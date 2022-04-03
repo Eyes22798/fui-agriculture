@@ -1,5 +1,5 @@
 export const BASE_URL = process.env.BASE_URL
 
 export const HTTP = {
-  baseURL: '/fui'
+  baseURL: '/api'
 }
