@@ -11,7 +11,7 @@ export const fetch = axios.create({
 
 const interceptorsInstance = new Interceptors()
 
-interceptorsInstance.use(fetch, [httpStatus, fetchDone, setRequestConfig], interceptorsInstance)
+interceptorsInstance.use(fetch, [setRequestConfig, httpStatus, fetchDone], interceptorsInstance)
 
 export const request = {
   post (url, data, config) {

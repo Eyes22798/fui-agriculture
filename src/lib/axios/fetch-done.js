@@ -1,11 +1,10 @@
 export const fetchDone = ({ interceptors }) => {
   interceptors.response((response) => {
-    console.log(response)
-    response.config.loading.close()
+    response.config.loading && response.config.loading.close()
 
-    return response
+    return response.data
   }, (error) => {
-    error.config.loading.close()
+    error.config.loading && error.config.loading.close()
 
     return error
   })

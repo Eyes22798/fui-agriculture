@@ -13,7 +13,7 @@ export const httpStatus = ({ interceptors }) => {
       return Promise.reject(response)
     }
 
-    return response.data
+    return response
   }, (error) => {
     const config = error.config
     const showErrorMessage = config.showErrorMessage // 添加错误防御

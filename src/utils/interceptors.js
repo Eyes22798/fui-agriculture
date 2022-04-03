@@ -7,7 +7,7 @@ export class Interceptors {
   async execFulfillFunc (interceptorMap, params) {
     let result = params
     for (const { onFulfilled } of interceptorMap) {
-      if (!isFunction(onFulfilled(result))) continue
+      if (!isFunction(onFulfilled)) continue
       result = await onFulfilled(result)
       if (!result) return params
     }
@@ -18,7 +18,7 @@ export class Interceptors {
   async execRejectFunc (interceptorMap, error) {
     let result = error
     for (const { onRejected } of interceptorMap) {
-      if (!isFunction(onRejected(result))) continue
+      if (!isFunction(onRejected)) continue
       result = await onRejected(result)
       if (!result) return Promise.reject(error)
     }
