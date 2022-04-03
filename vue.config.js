@@ -9,11 +9,10 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   devServer: {
     proxy: {
-      '/fui': {
+      '/api': {
         target: apiRoot, // 对应自己的接口  http://www.mock.eyesky.site/mock/11
         changeOrigin: true,
-        ws: false,
-        pathRewrite: { '^/fui': '' }
+        ws: false
 
       }
     }
