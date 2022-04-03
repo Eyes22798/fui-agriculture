@@ -1,62 +1,63 @@
-// 模块化组织axios拦截器
-const requestList = []
-
-const responseList = []
-
 const isFunction = (value) => typeof value === 'function'
 
-async function execFulfillFunc (interceptorMap, params) {
-  let result = params
-  for (const { onFulfilled } of interceptorMap) {
-    if (!isFunction(onFulfilled)) continue
-    result = await onFulfilled(result)
-    if (!result) return params
+export class Interceptors {
+  requestList = []
+  responseList = []
+
+  async execFulfillFunc (interceptorMap, params) {
+    let result = params
+    for (const { onFulfilled } of interceptorMap) {
+      if (!isFunction(onFulfilled(result))) continue
+      result = await onFulfilled(result)
+      if (!result) return params
+    }
+
+    return result
   }
 
-  return Promise.resolve(result)
-}
+  async execRejectFunc (interceptorMap, error) {
+    let result = error
+    for (const { onRejected } of interceptorMap) {
+      if (!isFunction(onRejected(result))) continue
+      result = await onRejected(result)
+      if (!result) return Promise.reject(error)
+    }
 
-async function execRejectFunc (interceptorMap, error) {
-  let result = error
-  for (const { onRejected } of interceptorMap) {
-    if (!isFunction(onRejected(result))) continue
-    result = await onRejected(result)
-    if (!result) return Promise.reject(error)
+    return Promise.reject(result)
   }
 
-  return Promise.reject(result)
-}
+  runInterceptors (instance) {
+    instance.interceptors.request.use((config) => {
+      return this.execFulfillFunc(this.requestList, config)
+    }, (error) => {
+      return this.execRejectFunc(this.requestList, error)
+    })
 
-function runInterceptors (instance) {
-  instance.interceptors.request.use((config) => {
-    return execFulfillFunc(requestList, config)
-  }, (error) => {
-    return execRejectFunc(responseList, error)
-  })
+    instance.interceptors.response.use((response) => {
+      return this.execFulfillFunc(this.responseList, response)
+    }, (error) => {
+      return this.execRejectFunc(this.responseList, error)
+    })
+  }
 
-  instance.interceptors.response.use((response) => {
-    return execFulfillFunc(requestList, response)
-  }, (error) => {
-    return execRejectFunc(responseList, error)
-  })
-}
-
-export const interceptors = {
-  use (instance, registerFuncs = []) {
+  use (instance, registerFuncs = [], classinstance) {
+    const interceptors = classinstance
     registerFuncs.forEach((func) => {
       if (isFunction(func)) func({ axios: instance, interceptors })
     })
 
-    runInterceptors(instance)
+    this.runInterceptors(instance)
     return instance
-  },
+  }
+
   request (onFulfilled, onRejected) {
-    requestList.push({
+    this.requestList.push({
       onFulfilled, onRejected
     })
-  },
+  }
+
   response (onFulfilled, onRejected) {
-    responseList.push({
+    this.responseList.push({
       onFulfilled, onRejected
     })
   }

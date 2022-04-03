@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { HTTP } from '@/config/common'
-import { interceptors } from '@/utils/interceptors'
+import { Interceptors } from '@/utils/interceptors'
 import { fetchDone } from './fetch-done'
 import { httpStatus } from './http-status'
 import { setRequestConfig } from './set-request-config'
@@ -9,11 +9,9 @@ export const fetch = axios.create({
   baseURL: HTTP.baseURL
 })
 
-interceptors.use(fetch, [
-  fetchDone,
-  httpStatus,
-  setRequestConfig
-])
+const interceptorsInstance = new Interceptors()
+
+interceptorsInstance.use(fetch, [httpStatus, fetchDone, setRequestConfig], interceptorsInstance)
 
 export const request = {
   post (url, data, config) {
