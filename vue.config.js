@@ -1,5 +1,6 @@
 const path = require('path')
-const apiRoot = process.env.NODE_ENV === 'development' ? 'http://mock.eyesky.site/mock/11' : ''
+// const apiRoot = process.env.NODE_ENV === 'development' ? '' : '101.42.242.59:80'
+// const apiRoot = process.env.NODE_ENV === 'development' ? 'http://mock.eyesky.site/mock/11' : '101.42.242.59:80'
 
 function resolve (dir) {
   return path.join(__dirname, dir)
@@ -10,10 +11,9 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: apiRoot, // 对应自己的接口  http://www.mock.eyesky.site/mock/11
+        target: 'http://101.42.242.59:80/', // 对应自己的接口  http://www.mock.eyesky.site/mock/11
         changeOrigin: true,
         ws: false
-
       }
     }
   },

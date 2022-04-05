@@ -1,5 +1,5 @@
 import { getToken } from '@/utils/auth'
-import qs from 'qs'
+// import qs from 'qs'
 
 const dataToFormData = (data) => {
   const formData = new FormData()
@@ -25,9 +25,9 @@ export const setRequestConfig = ({ interceptors }) => {
     }
 
     // 序列化 post put patch // TODO
-    if (['post', 'put', 'patch'].includes(config.method)) {
-      config.data = qs.stringify(config.data)
-    }
+    // if (['post', 'put', 'patch'].includes(config.method)) {
+    //   config.data = qs.stringify(config.data)
+    // }
 
     return config
   })
