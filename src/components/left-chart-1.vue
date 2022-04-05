@@ -1,7 +1,7 @@
 <template>
   <dv-border-box-13 :color="['#0EFCFF']" :reverse="true" style="padding: 10px;">
     <div class="left-chart-1">
-      <div class="lc1-header">{{ chartTopTitle }}</div>
+      <div class="lc1-header">{{ chartTopTitle || '风力风速统计' }}</div>
       <dv-decoration-3 style="width:200px;height:20px;" />
 
       <!-- <dv-capsule-chart class="lc1-chart" :config="config" /> -->
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { getDevlopInfo, getPersentInfo } from '@/api'
+import { getDevlopInfo } from '@/api'
 import dayjs from 'dayjs'
 export default {
   name: 'LeftChart1',
@@ -179,7 +179,7 @@ export default {
   methods: {
     async getData () {
       const { data } = await getDevlopInfo(this.developParams)
-      const data2 = await getPersentInfo(this.persentParams)
+      // const data2 = await getPersentInfo(this.persentParams)
 
       this.chartTopTitle = data.title
       this.option.xAxis.data = data.content.map((item) => {
@@ -189,13 +189,13 @@ export default {
         return item.info
       })
 
-      this.chartBottomTitle = data2.data.title
-      this.option2.series[0].data = data2.data.content.map((item) => {
-        return {
-          name: item.desc,
-          value: item.percent
-        }
-      })
+      // this.chartBottomTitle = data2.data.title
+      // this.option2.series[0].data = data2.data.content.map((item) => {
+      //   return {
+      //     name: item.desc,
+      //     value: item.percent
+      //   }
+      // })
     },
     resizeWindow () {
       var myEvent = new Event('resize')
