@@ -93,44 +93,58 @@
             <div class="boxTitle2" style="width:26%;margin-left:53vw;margin-top: -1.4vw;">气象数据</div>
             <div class="leftBottom">
                 <div class="land_data">
-                    <p>10cm 温度30湿度67</p>
-                    <p>20cm 温度30湿度67</p>
-                    <p>30cm 温度30湿度67</p>
+                  <p>土壤温度30℃ 土壤湿度67℃</p>
                 </div>
-
             </div>
             <div class="right_box">
-                <div class="grow_data">
-                    <img src="@/assets/img/tree_pic.png" alt="">
-                    <p>生长周期：8周</p>
-                    <p>黏土</p>
-                    <p>10cm茶土：22.88</p>
-                    <span>未来5天降水量：0mm</span>
-                    <i></i>
-                    <div class="specialistSuggest">
-                        <div>专家建议：</div>
-                        <div>本模板收集于网络，无需任何付费操作，Gitee免费下载使用</div>
-                    </div>
-                    <div class="fertilizationSuggest">
-                        <div>该生长周期施肥建议：</div>
-                        <div>氮肥含量：1.3-1.5kg</div>
-                        <div>钾肥含量：1.5-1.7kg</div>
-                    </div>
+              <div class="weather_data">
+                <div class="weather_text text_one">
+                  <span>空气温度：19℃</span>
+                  <span>空气湿度：52%</span>
+                  <span>风向：东南风</span>
+                  <span>风速：2m/s</span>
                 </div>
-                <div class="weather_data">
-                    <div class="weather_text text_one">
-                        <span>温度：19℃</span>
-                        <span>湿度：52%</span>
-                        <span>风向：东南风</span>
-                        <span>风速：2m/s</span>
-                    </div>
-                    <div class="weather_text text_two">
-                        <span>降雨量：0mm</span>
-                        <span>蒸发量：0.326mm/h</span>
-                        <span>气压：0.326MPa</span>
-                    </div>
+                <div class="weather_text text_two">
+                  <span>降雨量：0mm</span>
+                  <span>蒸发量：0.326mm/h</span>
+                  <span>气压：0.326MPa</span>
                 </div>
+              </div>
 
+              <span class="weather_data_right">
+                <span class="info-item">
+                  <img src="@/assets/img/zaosheng.svg" alt="">
+                  <span>噪声：19db</span>
+                </span>
+                <span class="info-item">
+                  <img src="@/assets/img/eryanghuatan.svg" alt="">
+                  <span>二氧化碳：500ppm</span>
+                </span>
+                <span class="info-item">
+                  <img src="@/assets/img/loudianwendu.svg" alt="">
+                  <span>露点温度：100℃</span>
+                </span>
+                <span class="info-item">
+                  <img src="@/assets/img/guangzhaoqiangdu.svg" alt="">
+                  <span>光照强度：20 Lux</span>
+                </span>
+                <span class="info-item">
+                  <img src="@/assets/img/kongqishidu.svg" alt="">
+                  <span>空气湿度：19%RH</span>
+                </span>
+                <span class="info-item">
+                  <img src="@/assets/img/lishiyuliang.svg" alt="">
+                  <span>历史雨量：100mm</span>
+                </span>
+                <span class="info-item">
+                  <img src="@/assets/img/turangEC.svg" alt="">
+                  <span>土壤EC3：100us/cm</span>
+                </span>
+                <span class="info-item">
+                  <img src="@/assets/img/fengli.svg" alt="">
+                  <span>风力：4级</span>
+                </span>
+              </span>
             </div>
           </div>
         </div>
