@@ -134,7 +134,7 @@
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/lishiyuliang.svg" alt="">
-                  <span>PM2.5：{{ infoData.pM25 }}ug/m3</span>
+                  <span>PM2.5：{{ infoData.pm25 }}ug/m3</span>
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/turangEC.svg" alt="">
@@ -330,7 +330,6 @@ export default {
   methods: {
     async getData () {
       const { data } = await getBaseInfo()
-      console.log(data)
 
       this.infoData = data
     }

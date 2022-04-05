@@ -9,7 +9,7 @@
     </div>
 
     <div class="left-chart-2">
-      <div class="lc1-header">{{ chartBottomTitle }}</div>
+      <div class="lc1-header">{{ chartBottomTitle || '风力风速占比' }}</div>
       <dv-decoration-3 style="width:200px;height:20px;" />
       <div class="rc1-chart-container">
         <dv-charts class="right" :option="option2" />
@@ -130,11 +130,11 @@ export default {
           {
             type: 'pie',
             data: [
-              { name: '收费系统', value: 93 },
-              { name: '通信系统', value: 66 },
-              { name: '监控系统', value: 52 },
-              { name: '供配电系统', value: 34 },
-              { name: '其他', value: 22 }
+              { name: '无风', value: 93 },
+              { name: '软风', value: 66 },
+              { name: '轻风', value: 52 },
+              { name: '微风', value: 34 },
+              { name: '强风', value: 22 }
             ],
             radius: ['45%', '65%'],
             insideLabel: {
@@ -153,7 +153,7 @@ export default {
         color: ['#00baff', '#3de7c9', '#fff', '#003D4A', '#427C5C']
       },
       developParams: {
-        itemNo: 1,
+        itemNo: 10,
         startTime: '',
         endTime: '',
         instance: 30
@@ -170,8 +170,8 @@ export default {
     const currentTime = dayjs()
     this.persentParams.time = currentTime.format('YYYY-MM-DD HH:mm')
 
-    this.persentParams.startTime = currentTime.format('YYYY-MM-DD HH:mm')
-    this.persentParams.endTime = currentTime.subtract(5, 'minute')
+    this.developParams.startTime = currentTime.format('YYYY-MM-DD HH:mm')
+    this.developParams.endTime = currentTime.subtract(5, 'minute').format('YYYY-MM-DD HH:mm')
 
     await this.getData()
     this.resizeWindow()
