@@ -1,7 +1,5 @@
 import { request } from '@/lib/axios/index'
 
-export const testApi = () => request.get('/settings/test')
-
 // 查询当前气息数据（图标展示
 export const getBaseInfo = () => request.get('/julia/info')
 

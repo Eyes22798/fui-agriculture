@@ -93,56 +93,56 @@
             <div class="boxTitle2" style="width:26%;margin-left:53vw;margin-top: -1.4vw;">气象数据</div>
             <div class="leftBottom">
                 <div class="land_data">
-                  <p>土壤温度30℃ 土壤湿度67℃</p>
+                  <p>土壤温度{{ infoData.soiLTemp }}℃ 土壤湿度{{ infoData.soiLMoisture }}℃</p>
                 </div>
             </div>
             <div class="right_box">
               <div class="weather_data">
                 <div class="weather_text text_one">
-                  <span>空气温度：19℃</span>
-                  <span>空气湿度：52%</span>
+                  <span>空气温度：{{ infoData.airTemp }}℃</span>
+                  <span>空气湿度：{{ infoData.airMoisture }}%</span>
                   <span>风向：东南风</span>
-                  <span>风速：2m/s</span>
+                  <span>风速：{{ infoData.windSpeed }}m/s</span>
                 </div>
                 <div class="weather_text text_two">
-                  <span>降雨量：0mm</span>
-                  <span>蒸发量：0.326mm/h</span>
-                  <span>气压：0.326MPa</span>
+                  <span>累计雨量：{{ infoData.cumulativeRainFall }}mm</span>
+                  <span>日雨量：{{ infoData.currentRainFall }}mm</span>
+                  <span>气压：{{ infoData.atmosphericPressure }}MPa</span>
                 </div>
               </div>
 
               <span class="weather_data_right">
                 <span class="info-item">
                   <img src="@/assets/img/zaosheng.svg" alt="">
-                  <span>噪声：19db</span>
+                  <span>噪声：{{ infoData.noise }}db</span>
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/eryanghuatan.svg" alt="">
-                  <span>二氧化碳：500ppm</span>
+                  <span>二氧化碳：{{ infoData.cO2 }}ppm</span>
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/loudianwendu.svg" alt="">
-                  <span>露点温度：100℃</span>
+                  <span>露点温度：{{ infoData.dewPointSoiLTemp }}℃</span>
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/guangzhaoqiangdu.svg" alt="">
-                  <span>光照强度：20 Lux</span>
+                  <span>光照强度：{{ infoData.lightIntensity }}Lux</span>
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/kongqishidu.svg" alt="">
-                  <span>空气湿度：19%RH</span>
+                  <span>空气湿度：{{ infoData.airMoisture}}%RH</span>
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/lishiyuliang.svg" alt="">
-                  <span>历史雨量：100mm</span>
+                  <span>PM2.5：{{ infoData.pM25 }}ug/m3</span>
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/turangEC.svg" alt="">
-                  <span>土壤EC3：100us/cm</span>
+                  <span>土壤EC3：{{ infoData.soiLTempEc }}us/cm</span>
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/fengli.svg" alt="">
-                  <span>风力：4级</span>
+                  <span>风力：{{ infoData.wind }}级</span>
                 </span>
               </span>
             </div>
@@ -186,7 +186,7 @@
                 </div>
                 <div class="liSpan">介绍</div>
                 <p class="liP">
-                    本模板收集于网络，无需任何付费操作，Gitee免费下载使用</p>
+                    </p>
             </div>
           </div>
           <div class="baseBox baseBox2" style="margin-bottom:15px;height:29.5%">
@@ -303,7 +303,7 @@
             </div>
           </div>
         </div>
-        </div>
+      </div>
 
     </dv-full-screen-container>
   </div>
@@ -311,6 +311,7 @@
 
 <script>
 import LeftChart1 from '@/components/left-chart-1.vue'
+import { getBaseInfo } from '@/api'
 
 export default {
   name: 'DataView',
@@ -319,7 +320,19 @@ export default {
   },
   data () {
     return {
-      option: null
+      option: null,
+      infoData: null
+    }
+  },
+  async mounted () {
+    await this.getData()
+  },
+  methods: {
+    async getData () {
+      const { data } = await getBaseInfo()
+      console.log(data)
+
+      this.infoData = data
     }
   }
 }

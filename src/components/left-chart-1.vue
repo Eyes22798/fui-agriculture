@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { testApi } from '@/api'
+import { getDevlopInfo, getPersentInfo } from '@/api'
 export default {
   name: 'LeftChart1',
   data () {
@@ -146,20 +146,32 @@ export default {
               formatter: '{percent}%\n{name}',
               style: {
                 fontSize: 14,
-                fill: '#fff'
+                fill: '#0efcff'
               }
             }
           }
         ],
-        color: ['#00baff', '#3de7c9', '#fff', '#ffc530', '#469f4b']
+        color: ['#00baff', '#3de7c9', '#fff', '#003D4A', '#427C5C']
+      },
+      developParams: {
+        itemNo: 1,
+        startTime: '',
+        endTime: '',
+        instance: ''
+      },
+      persentParams: {
+        itemNo: 1,
+        time: ''
       }
     }
   },
   methods: {
     async getData () {
-      const data = await testApi()
+      const data = await getDevlopInfo(this.developParams)
 
-      console.log(data)
+      const data2 = await getPersentInfo(this.persentParams)
+
+      console.log(data, data2)
     }
   }
 }
