@@ -153,7 +153,7 @@ export default {
         color: ['#00baff', '#3de7c9', '#fff', '#003D4A', '#427C5C']
       },
       developParams: {
-        itemNo: 10,
+        itemNo: 3,
         startTime: '',
         endTime: '',
         instance: 30
@@ -168,10 +168,10 @@ export default {
   },
   async mounted  () {
     const currentTime = dayjs()
-    this.persentParams.time = currentTime.format('YYYY-MM-DD HH:mm')
+    this.persentParams.time = currentTime.format('YYYY-MM-DD HH:mm:ss')
 
-    this.developParams.startTime = currentTime.format('YYYY-MM-DD HH:mm')
-    this.developParams.endTime = currentTime.subtract(5, 'minute').format('YYYY-MM-DD HH:mm')
+    this.developParams.startTime = currentTime.subtract(7, 'minute').format('YYYY-MM-DD HH:mm:ss')
+    this.developParams.endTime = currentTime.format('YYYY-MM-DD HH:mm:ss')
 
     await this.getData()
     this.resizeWindow()
@@ -182,11 +182,11 @@ export default {
       // const data2 = await getPersentInfo(this.persentParams)
 
       this.chartTopTitle = data.title
-      this.option.xAxis.data = data.content.map((item) => {
-        return String(item.time).split(' ')[1]
+      this.option.xAxis.data = data.map((item) => {
+        return String(dayjs(item.update_time).format('mm:ss'))
       })
-      this.option.series[0].data = data.content.map((item) => {
-        return item.info
+      this.option.series[0].data = data.map((item) => {
+        return item.value === '0.0' ? 0 : Number(item.value)
       })
 
       // this.chartBottomTitle = data2.data.title
