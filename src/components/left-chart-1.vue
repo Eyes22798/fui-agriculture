@@ -1,7 +1,7 @@
 <template>
   <dv-border-box-13 :color="['#0EFCFF']" :reverse="true" style="padding: 10px;">
     <div class="left-chart-1">
-      <div class="lc1-header">风速时间统计</div>
+      <div class="lc1-header">{{ chartTopTitle }}</div>
       <dv-decoration-3 style="width:200px;height:20px;" />
 
       <!-- <dv-capsule-chart class="lc1-chart" :config="config" /> -->
@@ -9,7 +9,7 @@
     </div>
 
     <div class="left-chart-2">
-      <div class="lc1-header">风速时间统计</div>
+      <div class="lc1-header">{{ chartBottomTitle }}</div>
       <dv-decoration-3 style="width:200px;height:20px;" />
       <div class="rc1-chart-container">
         <dv-charts class="right" :option="option2" />
@@ -20,36 +20,37 @@
 
 <script>
 import { getDevlopInfo, getPersentInfo } from '@/api'
+import dayjs from 'dayjs'
 export default {
   name: 'LeftChart1',
   data () {
     return {
-      config: {
-        data: [
-          {
-            name: '收费系统',
-            value: 167
-          },
-          {
-            name: '通信系统',
-            value: 67
-          },
-          {
-            name: '监控系统',
-            value: 123
-          },
-          {
-            name: '供配电系统',
-            value: 55
-          },
-          {
-            name: '其他',
-            value: 98
-          }
-        ],
-        colors: ['#00baff', '#3de7c9', '#fff', '#ffc530', '#469f4b'],
-        unit: '件'
-      },
+      // config: {
+      //   data: [
+      //     {
+      //       name: '收费系统',
+      //       value: 167
+      //     },
+      //     {
+      //       name: '通信系统',
+      //       value: 67
+      //     },
+      //     {
+      //       name: '监控系统',
+      //       value: 123
+      //     },
+      //     {
+      //       name: '供配电系统',
+      //       value: 55
+      //     },
+      //     {
+      //       name: '其他',
+      //       value: 98
+      //     }
+      //   ],
+      //   colors: ['#00baff', '#3de7c9', '#fff', '#ffc530', '#469f4b'],
+      //   unit: '件'
+      // },
       option: {
         legend: {
           data: ['风力'],
@@ -99,9 +100,7 @@ export default {
           axisTick: {
             show: false
           },
-          min: 95,
-          max: 100,
-          interval: 0.5
+          min: 0
         },
         series: [
           {
@@ -157,22 +156,54 @@ export default {
         itemNo: 1,
         startTime: '',
         endTime: '',
-        instance: ''
+        instance: 30
       },
       persentParams: {
         itemNo: 1,
         time: ''
-      }
+      },
+      chartTopTitle: '',
+      chartBottomTitle: ''
     }
+  },
+  async mounted  () {
+    const currentTime = dayjs()
+    this.persentParams.time = currentTime.format('YYYY-MM-DD HH:mm')
+
+    this.persentParams.startTime = currentTime.format('YYYY-MM-DD HH:mm')
+    this.persentParams.endTime = currentTime.subtract(5, 'minute')
+
+    await this.getData()
+    this.resizeWindow()
   },
   methods: {
     async getData () {
-      const data = await getDevlopInfo(this.developParams)
-
+      const { data } = await getDevlopInfo(this.developParams)
       const data2 = await getPersentInfo(this.persentParams)
 
-      console.log(data, data2)
+      this.chartTopTitle = data.title
+      this.option.xAxis.data = data.content.map((item) => {
+        return String(item.time).split(' ')[1]
+      })
+      this.option.series[0].data = data.content.map((item) => {
+        return item.info
+      })
+
+      this.chartBottomTitle = data2.data.title
+      this.option2.series[0].data = data2.data.content.map((item) => {
+        return {
+          name: item.desc,
+          value: item.percent
+        }
+      })
+    },
+    resizeWindow () {
+      var myEvent = new Event('resize')
+      window.dispatchEvent(myEvent)
     }
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize')
   }
 }
 </script>
