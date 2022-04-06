@@ -10,8 +10,8 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://101.42.242.59:80/', // 对应自己的接口  http://www.mock.eyesky.site/mock/11
+      '/': {
+        target: 'http://101.42.242.59:80/api/', // 对应自己的接口  http://www.mock.eyesky.site/mock/11
         changeOrigin: true,
         ws: false
       }
