@@ -51,8 +51,8 @@
 
           <div class="baseBox centerMainBox2" style="height:30%;">
             <img src="@/assets/img/down2.png" class="first_border" alt="">
-            <div class="boxTitle2" style="width:26%;">统计数据</div>
-            <div class="boxTitle2" style="width:26%;margin-left:22vw;margin-top: -1.4vw;">生长数据</div>
+            <div class="boxTitle2" style="width:26%;">土壤数据</div>
+            <div class="boxTitle2" style="width:26%;margin-left:22vw;margin-top: -1.4vw;">空气数据</div>
             <div class="boxTitle2" style="width:26%;margin-left:53vw;margin-top: -1.4vw;">气象数据</div>
             <div class="leftBottom">
                 <div class="land_data">
@@ -155,8 +155,9 @@
           <div class="baseBox baseBox2" style="margin-bottom:15px;height:29.5%">
             <img src="@/assets/img/right2.png" alt="">
             <!-- 四个角描边 end -->
-            <div class="boxTitle2">灌溉数据</div>
-            <div class="irrigate_data">
+            <div class="boxTitle2">占比统计</div>
+            <CircleChart />
+            <!-- <div class="irrigate_data">
               <div class="irrigate_top">
                   <div class="centerList">
                       <div class="centerListFont">累计灌溉水量（m2）</div>
@@ -187,7 +188,7 @@
                       <i>2.30</i>
                   </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="baseBox baseBox3" style="height:28%">
             <img src="@/assets/img/right3.png" alt="">
@@ -276,13 +277,15 @@
 import LeftChart1 from '@/components/left-chart-1.vue'
 import { getBaseInfo } from '@/api'
 import LineChart from '@/components/line-chart.vue'
+import CircleChart from '@/components/circle-chart.vue'
 // import Map from '@/components/map.vue'
 
 export default {
   name: 'DataView',
   components: {
     LeftChart1,
-    LineChart
+    LineChart,
+    CircleChart
   },
   data () {
     return {
@@ -414,6 +417,9 @@ export default {
     .baseBox2,
     .baseBox3 {
         position: relative;
+    }
+    .baseBox3 {
+        top: 10px;
     }
 
     .baseBox1 .hardware,

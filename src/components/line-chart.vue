@@ -11,7 +11,7 @@
 import { getDevlopInfo } from '@/api'
 import dayjs from 'dayjs'
 export default {
-  name: 'LeftChart1',
+  name: 'LeftChart',
   props: {
     title: {
       type: String,
