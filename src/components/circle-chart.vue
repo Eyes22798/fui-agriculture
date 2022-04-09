@@ -28,11 +28,9 @@ export default {
           {
             type: 'pie',
             data: [
-              { name: '无风', value: 93 },
-              { name: '软风', value: 66 },
-              { name: '轻风', value: 52 },
-              { name: '微风', value: 34 },
-              { name: '强风', value: 22 }
+              { name: '氮(N2)', value: 78 },
+              { name: '氧(O2)', value: 21 },
+              { name: '稀有气体', value: 1 }
             ],
             radius: ['45%', '65%'],
             insideLabel: {

@@ -155,7 +155,7 @@
           <div class="baseBox baseBox2" style="margin-bottom:15px;height:29.5%">
             <img src="@/assets/img/right2.png" alt="">
             <!-- 四个角描边 end -->
-            <div class="boxTitle2">占比统计</div>
+            <div class="boxTitle2">空气占比统计</div>
             <CircleChart />
             <!-- <div class="irrigate_data">
               <div class="irrigate_top">
