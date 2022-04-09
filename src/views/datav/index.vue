@@ -279,6 +279,7 @@ import { getBaseInfo } from '@/api'
 import LineChart from '@/components/line-chart.vue'
 import CircleChart from '@/components/circle-chart.vue'
 // import Map from '@/components/map.vue'
+import { Polling } from '@/utils/polling'
 
 export default {
   name: 'DataView',
@@ -290,11 +291,14 @@ export default {
   data () {
     return {
       option: null,
-      infoData: null
+      infoData: null,
+      polling: null
     }
   },
   async mounted () {
-    await this.getData()
+    // await this.getData()
+    this.polling = new Polling(this.getData, 30)
+    this.polling.start()
   },
   methods: {
     async getData () {
@@ -302,6 +306,9 @@ export default {
 
       this.infoData = data
     }
+  },
+  beforeDestroy () {
+    this.polling.stop()
   }
 }
 </script>

@@ -23,6 +23,7 @@
 <script>
 import { getDevlopInfo } from '@/api'
 import dayjs from 'dayjs'
+import { Polling } from '@/utils/polling'
 export default {
   name: 'LeftChart1',
   data () {
@@ -176,21 +177,21 @@ export default {
       },
       chartTopTitle: '',
       chartBottomTitle: '',
-      resizeEvent: null
+      resizeEvent: null,
+      polling: null
     }
   },
   async mounted  () {
-    const currentTime = dayjs()
-    this.persentParams.time = currentTime.format('YYYY-MM-DD HH:mm:ss')
-
-    this.developParams.startTime = currentTime.subtract(7, 'minute').format('YYYY-MM-DD HH:mm:ss')
-    this.developParams.endTime = currentTime.format('YYYY-MM-DD HH:mm:ss')
-
-    await this.getData()
-    this.resizeWindow()
+    this.polling = new Polling(this.getData, 30)
+    this.polling.start()
   },
   methods: {
     async getData () {
+      const currentTime = dayjs()
+      this.persentParams.time = currentTime.format('YYYY-MM-DD HH:mm:ss')
+
+      this.developParams.startTime = currentTime.subtract(7, 'minute').format('YYYY-MM-DD HH:mm:ss')
+      this.developParams.endTime = currentTime.format('YYYY-MM-DD HH:mm:ss')
       const { data } = await getDevlopInfo(this.developParams)
       // const data2 = await getPersentInfo(this.persentParams)
 
@@ -209,6 +210,7 @@ export default {
       //     value: item.percent
       //   }
       // })
+      this.resizeWindow()
     },
     resizeWindow () {
       this.resizeEvent = new Event('resize')
@@ -217,6 +219,7 @@ export default {
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.resizeEvent)
+    this.polling.stop()
   }
 }
 </script>

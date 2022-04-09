@@ -10,6 +10,8 @@
 <script>
 import { getDevlopInfo } from '@/api'
 import dayjs from 'dayjs'
+import { Polling } from '@/utils/polling'
+
 export default {
   name: 'LeftChart',
   props: {
@@ -116,21 +118,22 @@ export default {
       },
       chartTopTitle: '',
       chartBottomTitle: '',
-      resizeEvent: null
+      resizeEvent: null,
+      polling: null
     }
   },
   async mounted  () {
-    const currentTime = dayjs()
-
-    this.developParams.itemNo = this.itemNo
-    this.developParams.startTime = currentTime.subtract(7, 'minute').format('YYYY-MM-DD HH:mm:ss')
-    this.developParams.endTime = currentTime.format('YYYY-MM-DD HH:mm:ss')
-
-    await this.getData()
-    this.resizeWindow()
+    this.polling = new Polling(this.getData, 30)
+    this.polling.start()
   },
   methods: {
     async getData () {
+      const currentTime = dayjs()
+
+      this.developParams.itemNo = this.itemNo
+      this.developParams.startTime = currentTime.subtract(7, 'minute').format('YYYY-MM-DD HH:mm:ss')
+      this.developParams.endTime = currentTime.format('YYYY-MM-DD HH:mm:ss')
+
       const { data } = await getDevlopInfo(this.developParams)
 
       this.chartTopTitle = data.title
@@ -140,6 +143,8 @@ export default {
       this.option.series[0].data = data.map((item) => {
         return item.value === '0.0' ? 0 : Number(item.value)
       })
+
+      this.resizeWindow()
     },
     resizeWindow () {
       this.resizeEvent = new Event('resize')
@@ -148,6 +153,7 @@ export default {
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.resizeEvent)
+    this.polling.stop()
   }
 }
 </script>
