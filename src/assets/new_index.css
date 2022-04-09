@@ -84,11 +84,6 @@
     text-indent: .2vw;
 }
 
-.symptom {
-    /* text-indent: .2vw; */
-    /* font-size: .5vw; */
-}
-
 .symptom_content,
 .prevent_content {
     color: #0EFCFF;
@@ -107,9 +102,12 @@
 /* center部分start--- */
 .maps {
     position: relative;
-    width: 100%;
-    height: 95%;
-    margin-top: 2%;
+    width: 40%;
+    height: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 12%;
+    /* margin-top: 2%; */
     /* background: pink; */
     /* background-image: url(./img/landLevel.png); */
     /* background-size: 95% 100%; */
@@ -529,7 +527,7 @@
 .grow_data {
     position: relative;
     display: inline-block;
-    float: left;
+    /* float: left; */
     width: 45%;
     height: 100%;
     /* background-color: pink; */

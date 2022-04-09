@@ -1,7 +1,37 @@
 <template>
   <div id="data-view">
     <dv-full-screen-container class="main" style="height: 100%">
-      <div class="nav">XXXXX气象站数据指挥舱</div>
+      <div class="nav">气象数据展示舱</div>
+      <div class="nav_btn">
+        <div class="btn_left">
+            <a href="">
+                <div class="btn_list listActive">风力</div>
+            </a>
+            <a href="">
+                <div class="btn_list">空气湿度</div>
+            </a>
+            <a href="">
+                <div class="btn_list">土壤温度</div>
+            </a>
+            <a href="">
+                <div class="btn_list">土壤水分</div>
+            </a>
+        </div>
+        <div class="btn_right">
+            <a href="">
+                <div class="btn_list">露点温度</div>
+            </a>
+            <a href="">
+                <div class="btn_list">土壤 EC3</div>
+            </a>
+            <a href="">
+                <div class="btn_list">空气温度</div>
+            </a>
+            <a href="">
+                <div class="btn_list">光照强度</div>
+            </a>
+        </div>
+      </div>
 
       <div class="content">
         <div class="centerBox">
@@ -11,78 +41,11 @@
             </div>
 
             <div class="baseBoxRight right">
-              <div class="maps">
-                <img class="land_level" src="@/assets/img/landLevel.png" alt="">
-                <img class="wifi_gif" src="@/assets/img/wifi.gif">
-                <img class="sun_pic" src="@/assets/img/sun.png" alt="">
-                <img class="wrj_pic" src="@/assets/img/wrj.png" alt="">
-                <img class="wind_gif" src="@/assets/img/wind_shape.gif" alt="">
-                <img class="plant_pic display_box" src="@/assets/img/plant.png" alt="">
-                <div class="windows display_box">
-                    <ul>
-                        <li>土地信息</li>
-                        <li>本模板收集于网络</li>
-                        <li>无需任何付费操作</li>
-                        <li>如需获取更多模板：</li>
-                        <li>关注公众号【DreamCoders】</li>
-                        <li>即可免费获取</li>
-                    </ul>
-                </div>
-                <div class="window_two display_box">
-                    <ul>
-                        <li>刘新武</li>
-                        <li>年龄：41岁</li>
-                        <li>农事活动：6次</li>
-                        <li>信用等级：良好</li>
-                    </ul>
-                </div>
-                <div class="window_three display_box">
-                    <ul>
-                        <li>土壤数据</li>
-                        <li>湿度:63%</li>
-                        <li>酸碱度：PH4.8</li>
-                        <li>肥沃度：56%</li>
-                    </ul>
-                </div>
-                <div class="window_four display_box">
-                    <ul>
-                        <li>气象信息</li>
-                        <li>温度:19℃</li>
-                        <li>湿度：52%</li>
-                        <li>风速：2m/s</li>
-                        <li>降水：0mm</li>
-                    </ul>
-                </div>
-                <div class="window_five display_box">
-                    <ul>
-                        <li>植被信息</li>
-                        <li>品种名称:云台山大叶良种</li>
-                        <li>植株数量：76000株</li>
-                        <li>所属生长周期：幼年期</li>
-                        <li>长势情况：良好</li>
-                    </ul>
-                </div>
-                <div class="window_six display_box">
-                    <ul>
-                        <li>设备信息</li>
-                        <li>设备名称:无人机</li>
-                        <li>所属人：安化云台八角有限公司</li>
-                        <li>持续工作：3h</li>
-                        <li>连接状态：正常</li>
-                    </ul>
-                </div>
-                <a href="">
-                    <div class="peasant"></div>
-                </a>
-                <div class="land_box1"></div>
-                <div class="land_box2"></div>
-                <div class="land_box3"></div>
-                <div class="land_box4"></div>
-                <div class="plant"></div>
-                <div class="soil_data"></div>
-                <div class="weather_info"></div>
-                <!-- <div class="plant_info"></div> -->
-              </div>
+              <dv-border-box-11 title="气象统计" :color="['#0EFCFF']">
+                <LineChart title="土壤温度统计" :itemNo="5" style="margin: 40px 0 0 20px;" />
+
+                <LineChart title="空气湿度统计" :itemNo="10" style="margin: 0 0 0 20px;" />
+              </dv-border-box-11>
             </div>
           </div>
 
@@ -100,7 +63,7 @@
               <div class="weather_data">
                 <div class="weather_text text_one">
                   <span>空气温度：{{ infoData.airTemp }}℃</span>
-                  <span>空气湿度：{{ infoData.airMoisture }}%</span>
+                  <span>空气湿度：{{ infoData.airMoisture }}%RH</span>
                   <span>风向：东南风</span>
                   <span>风速：{{ infoData.windSpeed }}m/s</span>
                 </div>
@@ -130,7 +93,7 @@
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/kongqishidu.svg" alt="">
-                  <span>空气湿度：{{ infoData.airMoisture}}%RH</span>
+                  <span>露点温度：{{ infoData.dewPointSoiLTemp}}℃</span>
                 </span>
                 <span class="info-item">
                   <img src="@/assets/img/lishiyuliang.svg" alt="">
@@ -194,36 +157,36 @@
             <!-- 四个角描边 end -->
             <div class="boxTitle2">灌溉数据</div>
             <div class="irrigate_data">
-                <div class="irrigate_top">
-                    <div class="centerList">
-                        <div class="centerListFont">累计灌溉水量（m2）</div>
-                        <div class="centerListNum">
-                            <span class="">23678</span>
-                        </div>
-                    </div>
-                    <div class="centerList">
-                        <div class="centerListFont">灌溉压力（MPa）</div>
-                        <div class="centerListNum">
-                            <span class="">0.29</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="irrigate_bottom">
-                    <div class="every_line">
-                        <span>当前灌溉流量（m²/h）</span>
-                        <i class="">0.78</i>
-                    </div>
-                    <div class="every_line">
-                        <span>当前灌溉阀门数量</span>
+              <div class="irrigate_top">
+                  <div class="centerList">
+                      <div class="centerListFont">累计灌溉水量（m2）</div>
+                      <div class="centerListNum">
+                          <span class="">23678</span>
+                      </div>
+                  </div>
+                  <div class="centerList">
+                      <div class="centerListFont">灌溉压力（MPa）</div>
+                      <div class="centerListNum">
+                          <span class="">0.29</span>
+                      </div>
+                  </div>
+              </div>
+              <div class="irrigate_bottom">
+                  <div class="every_line">
+                      <span>当前灌溉流量（m²/h）</span>
+                      <i class="">0.78</i>
+                  </div>
+                  <div class="every_line">
+                      <span>当前灌溉阀门数量</span>
 
-                        <i class="counter-value">49</i>
-                        <i class="counter-value">2</i>
-                    </div>
-                    <div class="every_line">
-                        <span>茶园水池液位</span>
-                        <i>2.30</i>
-                    </div>
-                </div>
+                      <i class="counter-value">49</i>
+                      <i class="counter-value">2</i>
+                  </div>
+                  <div class="every_line">
+                      <span>茶园水池液位</span>
+                      <i>2.30</i>
+                  </div>
+              </div>
             </div>
           </div>
           <div class="baseBox baseBox3" style="height:28%">
@@ -312,11 +275,14 @@
 <script>
 import LeftChart1 from '@/components/left-chart-1.vue'
 import { getBaseInfo } from '@/api'
+import LineChart from '@/components/line-chart.vue'
+// import Map from '@/components/map.vue'
 
 export default {
   name: 'DataView',
   components: {
-    LeftChart1
+    LeftChart1,
+    LineChart
   },
   data () {
     return {
@@ -423,13 +389,17 @@ export default {
 
     .baseBoxLeft {
         width: 30%;
-        height: 95%;
+        height: 99%;
         position: relative;
     }
 
     .baseBoxRight {
         width: 68%;
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
     }
 
     .baseBoxLeft .first_border {

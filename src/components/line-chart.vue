@@ -1,23 +1,10 @@
 <template>
-  <dv-border-box-13 :color="['#0EFCFF']" :reverse="true" style="padding: 10px;">
-    <div class="left-chart-1">
-      <div class="lc1-header">{{ chartTopTitle || '风力风速统计' }}</div>
-      <dv-decoration-3 style="width:200px;height:20px;" />
+  <div class="left-chart">
+    <div class="chart-header">{{ title }}</div>
+    <dv-decoration-6 style="width:300px;height:10px;" />
 
-      <!-- <dv-capsule-chart class="lc1-chart" :config="config" /> -->
-      <dv-charts :option="option" />
-    </div>
-
-    <dv-decoration-10 style="width:100%;height:5px;" />
-
-    <div class="left-chart-2">
-      <div class="lc1-header">{{ chartBottomTitle || '风力风速占比' }}</div>
-      <dv-decoration-3 style="width:200px;height:20px;" />
-      <div class="rc1-chart-container">
-        <dv-charts class="right" :option="option2" />
-      </div>
-    </div>
-  </dv-border-box-13>
+    <dv-charts :option="option" />
+  </div>
 </template>
 
 <script>
@@ -25,37 +12,21 @@ import { getDevlopInfo } from '@/api'
 import dayjs from 'dayjs'
 export default {
   name: 'LeftChart1',
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    itemNo: {
+      type: Number,
+      default: 1
+    }
+  },
   data () {
     return {
-      // config: {
-      //   data: [
-      //     {
-      //       name: '收费系统',
-      //       value: 167
-      //     },
-      //     {
-      //       name: '通信系统',
-      //       value: 67
-      //     },
-      //     {
-      //       name: '监控系统',
-      //       value: 123
-      //     },
-      //     {
-      //       name: '供配电系统',
-      //       value: 55
-      //     },
-      //     {
-      //       name: '其他',
-      //       value: 98
-      //     }
-      //   ],
-      //   colors: ['#00baff', '#3de7c9', '#fff', '#ffc530', '#469f4b'],
-      //   unit: '件'
-      // },
       option: {
         legend: {
-          data: ['风力'],
+          data: ['空气湿度'],
           textStyle: {
             fill: '#fff'
           }
@@ -127,42 +98,11 @@ export default {
           }
         ]
       },
-      option2: {
-        series: [
-          {
-            type: 'pie',
-            data: [
-              { name: '无风', value: 93 },
-              { name: '软风', value: 66 },
-              { name: '轻风', value: 52 },
-              { name: '微风', value: 34 },
-              { name: '强风', value: 22 }
-            ],
-            radius: ['45%', '65%'],
-            insideLabel: {
-              show: false
-            },
-            outsideLabel: {
-              labelLineEndLength: 10,
-              formatter: '{percent}%\n{name}',
-              style: {
-                fontSize: 14,
-                fill: '#0efcff'
-              }
-            }
-          }
-        ],
-        color: ['#00baff', '#3de7c9', '#fff', '#003D4A', '#427C5C']
-      },
       developParams: {
-        itemNo: 3,
+        itemNo: 10,
         startTime: '',
         endTime: '',
         instance: 30
-      },
-      persentParams: {
-        itemNo: 1,
-        time: ''
       },
       chartTopTitle: '',
       chartBottomTitle: ''
@@ -170,8 +110,8 @@ export default {
   },
   async mounted  () {
     const currentTime = dayjs()
-    this.persentParams.time = currentTime.format('YYYY-MM-DD HH:mm:ss')
 
+    this.developParams.itemNo = this.itemNo
     this.developParams.startTime = currentTime.subtract(7, 'minute').format('YYYY-MM-DD HH:mm:ss')
     this.developParams.endTime = currentTime.format('YYYY-MM-DD HH:mm:ss')
 
@@ -181,7 +121,6 @@ export default {
   methods: {
     async getData () {
       const { data } = await getDevlopInfo(this.developParams)
-      // const data2 = await getPersentInfo(this.persentParams)
 
       this.chartTopTitle = data.title
       this.option.xAxis.data = data.map((item) => {
@@ -190,14 +129,6 @@ export default {
       this.option.series[0].data = data.map((item) => {
         return item.value === '0.0' ? 0 : Number(item.value)
       })
-
-      // this.chartBottomTitle = data2.data.title
-      // this.option2.series[0].data = data2.data.content.map((item) => {
-      //   return {
-      //     name: item.desc,
-      //     value: item.percent
-      //   }
-      // })
     },
     resizeWindow () {
       var myEvent = new Event('resize')
@@ -211,23 +142,21 @@ export default {
 </script>
 
 <style lang="less">
-.lc1-header {
+.chart-header {
   text-align: center;
-  height: 40px;
+  height: 20px;
   display: flex;
   justify-content: left;
   align-items: center;
   font-size: 0.8vw;
-  margin-top: .2vw;
   color: #0efcff;
 }
-.left-chart-1 {
+.left-chart {
   width: 100%;
-  height: 50%;
+  height: 48%;
   display: flex;
   flex-grow: 0;
   flex-direction: column;
-  margin-top: .4vw;
   .lc1-details {
     height: 50px;
     font-size: 16px;
@@ -243,22 +172,6 @@ export default {
   }
   .lc1-chart {
     flex: 1;
-  }
-}
-
-.left-chart-2 {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  color: #0efcff;
-  .rc1-chart-container {
-    flex: 1;
-    display: flex;
-  }
-  .right {
-    flex: 1;
-    box-sizing: border-box;
   }
 }
 </style>
