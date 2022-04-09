@@ -66,6 +66,11 @@ export default {
             '10/07', '10/07', '10/08', '10/09', '10/10', '10/11',
             '10/12', '10/13', '10/14', '10/15'
           ],
+          name: '时间',
+          nameTextStyle: {
+            fill: '#b1afc6',
+            fontSize: 14
+          },
           boundaryGap: false,
           axisLine: {
             style: {
@@ -83,6 +88,11 @@ export default {
         },
         yAxis: {
           data: 'value',
+          name: 'm/s',
+          nameTextStyle: {
+            fill: '#b1afc6',
+            fontSize: 14
+          },
           splitLine: {
             show: false
           },
@@ -165,7 +175,8 @@ export default {
         time: ''
       },
       chartTopTitle: '',
-      chartBottomTitle: ''
+      chartBottomTitle: '',
+      resizeEvent: null
     }
   },
   async mounted  () {
@@ -200,12 +211,12 @@ export default {
       // })
     },
     resizeWindow () {
-      var myEvent = new Event('resize')
-      window.dispatchEvent(myEvent)
+      this.resizeEvent = new Event('resize')
+      window.dispatchEvent(this.resizeEvent)
     }
   },
   beforeDestroy () {
-    window.removeEventListener('resize')
+    window.removeEventListener('resize', this.resizeEvent)
   }
 }
 </script>

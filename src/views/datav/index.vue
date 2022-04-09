@@ -41,7 +41,7 @@
             </div>
 
             <div class="baseBoxRight right">
-              <dv-border-box-11 title="气象统计" :color="['#0EFCFF']">
+              <dv-border-box-11 title="气象统计" :color="['#000', '#0EFCFF']">
                 <LineChart title="土壤温度统计" :itemNo="5" style="margin: 40px 0 0 20px;" />
 
                 <LineChart title="空气湿度统计" :itemNo="10" style="margin: 0 0 0 20px;" />

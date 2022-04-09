@@ -51,7 +51,8 @@ export default {
       persentParams: {
         itemNo: 1,
         time: ''
-      }
+      },
+      resizeEvent: null
     }
   },
   async mounted  () {
@@ -75,12 +76,12 @@ export default {
       })
     },
     resizeWindow () {
-      var myEvent = new Event('resize')
-      window.dispatchEvent(myEvent)
+      this.resizeEvent = new Event('resize')
+      window.dispatchEvent(this.resizeEvent)
     }
   },
   beforeDestroy () {
-    window.removeEventListener('resize')
+    window.removeEventListener('resize', this.resizeEvent)
   }
 }
 </script>
